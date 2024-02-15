@@ -2,6 +2,8 @@
 
 This repository contains code for the paper [Finding Paths for Explainable MOOC Recommendation: A Learner Perspective.](https://arxiv.org/abs/2312.10082)
 
+![Alt text](pipeline.jpg)
+
 ## Table of Contents<!-- omit from toc -->
 
 - [Datasets](#datasets)
