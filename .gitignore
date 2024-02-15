@@ -6,7 +6,8 @@ tmp/
 .DS_Store
 *.pkl
 tags
-
+saved/
+log_tensorboard/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

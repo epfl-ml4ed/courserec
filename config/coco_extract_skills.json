@@ -1,7 +1,0 @@
-{
-    "course_file": "data/coco/coco/course_latest.csv",
-    "source_node": "course_id",
-    "source_type": null,
-    "target_text": "short_description",
-    "save_course": "course_skills.csv"
-}

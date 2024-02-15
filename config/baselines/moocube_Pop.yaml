@@ -1,0 +1,22 @@
+data_path: data/mooc/
+dataset: recbolemoocube
+checkpoint_dir: saved/
+results_dir: tmp/mooc/evaluation
+benchmark_filename: ['train', 'validation', 'test']
+
+
+model: Pop
+
+run_num: 1
+
+eval_args:
+    mode: full
+metrics: ['MRR', 'NDCG', 'Hit', 'Precision', 'Recall']
+topk: [1, 3, 5, 10, 20]
+valid_metric: Hit@10
+metric_decimal_place: 4
+
+log_wandb: False
+wandb_project: recbole
+
+seed: 4
