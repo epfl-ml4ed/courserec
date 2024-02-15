@@ -2,15 +2,16 @@ import os
 import argparse
 
 
-def save_learners(path, savedir, name):
-    """Save coco learners to .user file.
+def save_learners(datadir, savedir, name):
+    """Save learners to recbole format
 
     Args:
-        path (str): path of the dataset
+        datadir (str): path of the processed dataset
+        savedir (str): path of the recbole dataset
         name (str): name of the dataset
     """
     users = []
-    with open(os.path.join(path, "users.txt"), "r") as f:
+    with open(os.path.join(datadir, "users.txt"), "r") as f:
         for line in f:
             users.append(line.strip())
 
@@ -21,16 +22,17 @@ def save_learners(path, savedir, name):
     return users
 
 
-def save_courses(path, savedir, name):
-    """Save coco courses to .item file.
+def save_courses(datadir, savedir, name):
+    """Save coco courses to recbole format
 
     Args:
-        path (str): path of the dataset
+        datadir (str): path of the processed dataset
+        savedir (str): path of the recbole dataset
         name (str): name of the dataset
     """
 
     courses = []
-    with open(os.path.join(path, "courses.txt"), "r") as f:
+    with open(os.path.join(datadir, "courses.txt"), "r") as f:
         for line in f:
             courses.append(line.strip())
 
@@ -41,11 +43,11 @@ def save_courses(path, savedir, name):
     return courses
 
 
-def save_course_entity(path, savedir, name, courses):
-    """Save coco course entity to .link file.
+def save_course_entity(savedir, name, courses):
+    """Save coco course entity to recbole format
 
     Args:
-        path (str): path of the dataset
+        savedir (str): path of the recbole dataset
         name (str): name of the dataset
         courses (list): list of courses
     """
@@ -55,64 +57,67 @@ def save_course_entity(path, savedir, name, courses):
             f.write(f"{course}\t{course}\n")
 
 
-def read_concepts(path):
-    """Save coco courses to .item file.
+def read_concepts(datadir):
+    """Read concepts from processed dataset
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
-    """
+        datadir (str): path of the processed dataset
 
+    Returns:
+        list: list of concepts
+    """
     concepts = []
-    with open(os.path.join(path, "concepts.txt"), "r") as f:
+    with open(os.path.join(datadir, "concepts.txt"), "r") as f:
         for line in f:
             concepts.append(line.strip())
 
     return concepts
 
 
-def read_schools(path):
-    """Save coco courses to .item file.
+def read_schools(datadir):
+    """Read schools from processed dataset
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
-    """
+        datadir (str): path of the processed dataset
 
+    Returns:
+        list: list of schools
+    """
     schools = []
-    with open(os.path.join(path, "schools.txt"), "r") as f:
+    with open(os.path.join(datadir, "schools.txt"), "r") as f:
         for line in f:
             schools.append(line.strip())
 
     return schools
 
 
-def read_teachers(path):
-    """Save coco courses to .item file.
+def read_teachers(datadir):
+    """Read teachers from processed dataset
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
-    """
+        datadir (str): path of the processed dataset
 
+    Returns:
+        list: list of teachers
+    """
     teachers = []
-    with open(os.path.join(path, "teachers.txt"), "r") as f:
+    with open(os.path.join(datadir, "teachers.txt"), "r") as f:
         for line in f:
             teachers.append(line.strip())
 
     return teachers
 
 
-def read_course_concepts(path, kg_triplets, courses, concepts):
-    """Update kg triplets with instructors.
+def read_course_concepts(datadir, kg_triplets, courses, concepts):
+    """Update kg triplets with concepts.
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
+        datadir (str): path of the processed dataset
         kg_triplets (list): list of kg triplets
         courses (list): list of courses
+        concepts (list): list of concepts
     """
-    with open(os.path.join(path, "course_concepts.txt"), "r") as f:
+    with open(os.path.join(datadir, "course_concepts.txt"), "r") as f:
         for i, line in enumerate(f):
             course_concepts = line.strip()
             if course_concepts:
@@ -127,16 +132,16 @@ def read_course_concepts(path, kg_triplets, courses, concepts):
                     )
 
 
-def read_course_school(path, kg_triplets, courses, schools):
-    """Update kg triplets with instructors.
+def read_course_school(datadir, kg_triplets, courses, schools):
+    """Update kg triplets with schools.
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
+        datadir (str): path of the dataset
         kg_triplets (list): list of kg triplets
         courses (list): list of courses
+        schools (list): list of schools
     """
-    with open(os.path.join(path, "course_school.txt"), "r") as f:
+    with open(os.path.join(datadir, "course_school.txt"), "r") as f:
         for i, line in enumerate(f):
             course_schools = line.strip()
             if course_schools:
@@ -151,16 +156,16 @@ def read_course_school(path, kg_triplets, courses, schools):
                     )
 
 
-def read_course_teachers(path, kg_triplets, courses, teachers):
+def read_course_teachers(datadir, kg_triplets, courses, teachers):
     """Update kg triplets with instructors.
 
     Args:
-        path (str): path of the dataset
-        name (str): name of the dataset
+        datadir (str): path of the processed dataset
         kg_triplets (list): list of kg triplets
         courses (list): list of courses
+        teacher (list): list of teacher
     """
-    with open(os.path.join(path, "course_teachers.txt"), "r") as f:
+    with open(os.path.join(datadir, "course_teachers.txt"), "r") as f:
         for i, line in enumerate(f):
             course_teachers = line.strip()
             if course_teachers:
@@ -175,31 +180,33 @@ def read_course_teachers(path, kg_triplets, courses, teachers):
                     )
 
 
-def save_kg_triplets(kg_triplets, path, name):
+def save_kg_triplets(kg_triplets, savedir, name):
     """Save kg_triplets to file.
 
     Args:
         kg_triplets (list): list of triplets as a tuple (head_id, relation_id, tail_id)
-        path (str): path to save the file
+        savedir (str): path of the recbole dataset
+        name (str): name of the dataset
     """
-    with open(os.path.join(path, name + ".kg"), "w") as f:
+    with open(os.path.join(savedir, name + ".kg"), "w") as f:
         f.write("head_id:token\trelation_id:token\ttail_id:token\n")
         for head_id, relation_id, tail_id in kg_triplets:
             f.write(f"{head_id}\t{relation_id}\t{tail_id}\n")
 
 
-def save_enrolment(path, savedir, name, subset, learners, courses):
-    """Save coco enrolments to file.
+def save_enrolment(datadir, savedir, name, subset, learners, courses):
+    """Save coco enrolments recbole format
 
     Args:
-        path (str): path of the dataset
+        datadir (str): path of the processed dataset
+        savedir (str): path of the recbole dataset
         name (str): name of the dataset
         subset (str): name of the subset
         learners (list): list of learners
         courses (list): list of courses
     """
     enrolments = []
-    with open(os.path.join(path, subset + ".txt"), "r") as f:
+    with open(os.path.join(datadir, subset + ".txt"), "r") as f:
         for line in f:
             enrolments.append([int(x) for x in line.split()])
 
@@ -209,21 +216,23 @@ def save_enrolment(path, savedir, name, subset, learners, courses):
             f.write(f"{learners[learner]}\t{courses[course]}\t1\n")
 
 
-def format_pgpr_moocube(datadir, savedir, dataset_name):
-    """Format PGPR-COCO dataset to recbole format.
+def format_pgpr_moocube(datadir, savedir, name):
+    """Format processed dataset to recbole format
 
     Args:
-        datadir (str): path to the dataset
+        datadir (str): path of the processed dataset
+        savedir (str): path of the recbole dataset
+        name (str): name of the dataset
     """
-    learners = save_learners(datadir, savedir, dataset_name)
-    courses = save_courses(datadir, savedir, dataset_name)
+    learners = save_learners(datadir, savedir, name)
+    courses = save_courses(datadir, savedir, name)
 
     subsets = ["train", "validation", "test"]
 
     for subset in subsets:
-        save_enrolment(datadir, savedir, dataset_name, subset, learners, courses)
+        save_enrolment(datadir, savedir, name, subset, learners, courses)
 
-    save_course_entity(datadir, savedir, dataset_name, courses)
+    save_course_entity(savedir, name, courses)
     concepts = read_concepts(datadir)
     teachers = read_teachers(datadir)
     schools = read_schools(datadir)
@@ -231,7 +240,7 @@ def format_pgpr_moocube(datadir, savedir, dataset_name):
     read_course_concepts(datadir, kg_triplets, courses, concepts)
     read_course_school(datadir, kg_triplets, courses, schools)
     read_course_teachers(datadir, kg_triplets, courses, teachers)
-    save_kg_triplets(kg_triplets, savedir, dataset_name)
+    save_kg_triplets(kg_triplets, savedir, name)
 
 
 if __name__ == "__main__":

@@ -31,11 +31,15 @@ def load_config(config_file):
 
 
 def evaluate(topk_matches, test_user_products):
-    """Compute metrics for predicted recommendations.
+    """Compute the ranking metrics
+
     Args:
-        topk_matches: a list or dict of product ids in ascending order.
+        topk_matches (dict): TopK Predictions from the model for each user
+        test_user_products (dict): Ground truth items for each user
+
+    Returns:
+        dict: ranking metrics
     """
-    # Compute metrics
     (
         precisions_all,
         recalls_all,
@@ -123,6 +127,15 @@ def evaluate(topk_matches, test_user_products):
 
 
 def get_topk_and_interactions(model, test_data):
+    """Get the model predictions and ground truth interactions.
+
+    Args:
+        model (recbole.model): recommender model
+        test_data (recbole.data.dataset): test set
+
+    Returns:
+        dict,dict: model predictions and ground truth interactions
+    """
     num_items = test_data._dataset.item_num
     num_users = test_data._dataset.user_num
     topk_matches = defaultdict(list)
@@ -150,9 +163,13 @@ def train(config, model_name, train_data, valid_data, test_data):
     Args:
         config (Config): config object
         model_name (str): name of the model
-        train_data (dataset): train dataset
-        valid_data (dataset): valid dataset
-        test_data (dataset): test dataset
+        train_data (recbole.data.dataset): train dataset
+        valid_data (recbole.data.dataset): valid dataset
+        test_data (recbole.data.dataset): test dataset
+
+    Returns:
+        dict: ranking metrics on test_data
+
     """
     model = get_model(model_name)(config, train_data._dataset).to(config["device"])
 
@@ -167,7 +184,7 @@ def train(config, model_name, train_data, valid_data, test_data):
 
 
 def run(config_file):
-    """Run the model.
+    """Train and evaluate the model multiple times and save the mean and std results.
 
     Args:
         config_file (str): yaml config file path
