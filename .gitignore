@@ -114,4 +114,6 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-
+# skill extractor files
+skill_db_relax_20.json
+token_dist.json
