@@ -190,7 +190,7 @@ The results are saved in tmp/coco.
 
 ### Process the files for Recbole
 
-Process the mooccube files for RecBole (requires data/mooc/MOOCCube/processed_files)
+Process the Xuetang files for RecBole (requires data/mooc/MOOCCube/processed_files)
 
 ```bash
 python src/baselines/format_moocube.py
@@ -205,6 +205,16 @@ python src/baselines/format_coco.py
 ```
 
 The files are saved in the folder data/coco/recbolecoco.
+
+### Run the baselines
+
+To run the baselines, choose a config file in config/baselines and run the following:
+
+```bash
+python src/baselines/baseline.py --config config/baselines/coco_Pop.yaml
+```
+
+This example runs the Pop baseline on the coco dataset.
 
 </details>
 
