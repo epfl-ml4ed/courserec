@@ -37,6 +37,15 @@ def get_skills(skill_extractor, target_text):
 
 
 def get_skills_from_course(datadir, skill_extractor):
+    """Extract skills fron courses descriptions
+
+    Args:
+        datadir (str): path of the processed dataset
+        skill_extractor (skillNer.skill_extractor_class.SkillExtractor): skill extractor
+
+    Returns:
+        pandas.dataframe: datadrame with courses and extracted skills
+    """
     # Load the course_latest.csv file
     course_latest_df = pd.read_csv(os.path.join(datadir, "course_latest.csv"))
 
@@ -65,6 +74,15 @@ def get_skills_from_course(datadir, skill_extractor):
 
 
 def get_skills_from_learner(datadir, course_skill_df):
+    """Associates learners with the skills they learned from the courses they have taken
+
+    Args:
+        datadir (str): path of the processed dataset
+        course_skill_df (pandas.dataframe): dataframe of courses and their associated skills
+
+    Returns:
+        pandas.dataframe: dataframe of learners and their associated skills
+    """
     enrolements_df = pd.read_csv(os.path.join(datadir, "evaluate_latest.csv"))
     enrolements_df = enrolements_df[["learner_id", "course_id"]]
 
