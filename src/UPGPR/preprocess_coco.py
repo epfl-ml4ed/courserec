@@ -27,6 +27,8 @@ def main():
 
     args = parser.parse_args()
 
+    os.makedirs(args.save_dir, exist_ok=True)
+
     course_latest = read_courses(args)
 
     teach_latest = pd.read_csv(

@@ -120,3 +120,6 @@ token_dist.json
 
 # notebook
 playground.ipynb
+
+# recbole installation
+src/recbole/

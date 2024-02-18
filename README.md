@@ -23,7 +23,7 @@ This repository contains code for the paper [Finding Paths for Explainable MOOC 
 
 Download Xuetang from [http://moocdata.cn/data/MOOCCube](http://moocdata.cn/data/MOOCCube), extract the file and place the MOOCCube folder in data/mooc/
 
-You should get two folders:
+We assume that you will have at least the following two folders:
 
 - data/mooc/MOOCCube/entities/
 - data/mooc/MOOCCube/relations/
@@ -50,11 +50,7 @@ Note: Because you might get a more recent version of the dataset, some of the ch
 
 Python 3.10 is required
 
-If you intent to run the skill extractor on the coco datset, you will need to download en_core_web_lg:
 
-```bash
-python -m spacy download en_core_web_lg
-```
 
 ### Install required packages
 
@@ -62,16 +58,10 @@ python -m spacy download en_core_web_lg
 pip install -r requirements.txt
 ```
 
-### Install RecBole for the baselines
-
-Install RecBole from source (can be done in any directory)
+If you intent to run the skill extractor on the coco datset, you will need to download en_core_web_lg:
 
 ```bash
- git clone https://github.com/RUCAIBox/RecBole.git && cd RecBole
-```
-
-```bash
-pip install -e . --verbose
+python -m spacy download en_core_web_lg
 ```
 
 </details>
@@ -95,7 +85,7 @@ We used the same file format as in the original PGPR repoisitory: [https://githu
 ### Xuetang's Dataset and Knowledge Graph creation
 
 ```bash
-python src/UPGPR/make_dataset.py --config config/mooc.json
+python src/UPGPR/make_dataset.py --config config/UPGPR/mooc.json
 ```
 
 After this process, the files containing the train, validation and test sets and the Knowledge Graph have been created in tmp/mooc.
@@ -103,7 +93,7 @@ After this process, the files containing the train, validation and test sets and
 ### Train the Xuetang's Knowledge Graph Embeddings
 
 ```bash
-python src/UPGPR/train_transe_model.py --config config/mooc.json
+python src/UPGPR/train_transe_model.py --config config/UPGPR/mooc.json
 ```
 
 The KG embeddings are saved in tmp/mooc.

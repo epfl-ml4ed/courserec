@@ -175,7 +175,7 @@
         "lr": 1e-3,
         "patience": 10,
         "max_acts": 250,
-        "max_path_len": 3,
+        "max_path_len": 5,
         "gamma": 0.99,
         "ent_weight": 1e-3,
         "act_dropout": 0.5,
@@ -200,7 +200,7 @@
         "gpu": "0",
         "epochs": 50,
         "max_acts": 250,
-        "max_path_len": 3,
+        "max_path_len": 5,
         "gamma": 0.99,
         "state_history": 2,
         "hidden": [
@@ -217,12 +217,12 @@
             1
         ],
         "add_products": false,
-        "run_path": false,
+        "run_path": true,
         "run_eval": true,
         "use_wandb": false,
         "wandb_project_name": "project_name",
         "wandb_run_name": "run_name",
-        "result_file_name": "results.txt",
+        "result_file_name": "UPGPR_max_len_3.json",
         "early_stopping": false
     }
 }
