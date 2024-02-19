@@ -2,3 +2,5 @@ recbole==1.2.0
 pyarrow==15.0.0
 wandb==0.16.3
 easydict==1.12
+skillner==1.0.3
+ipython==8.21.0
