@@ -49,9 +49,14 @@ Note: Because you might get a more recent version of the dataset, some of the ch
 
 ### Requirements
 
-Python 3.10 is required
+Python 3.10 is required.
 
+We recommend using a conda environment, but feel free to use wahthever you are the most confortable with:
 
+```bash
+conda create -n upgpr python=3.10
+conda activate upgpr
+```
 
 ### Install required packages
 
