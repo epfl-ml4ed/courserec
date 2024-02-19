@@ -19,10 +19,10 @@ def evaluate(
     test_user_products,
     use_wandb,
     tmp_dir,
-    result_file_name="result.txt",
+    result_file_dir,
+    result_file_name,
     min_courses=10,
     compute_all=True,
-    sum_prob=False,
 ):
     """Compute metrics for predicted recommendations.
     Args:
@@ -198,37 +198,18 @@ def evaluate(
             avg_hit_at_5_all,
         )
     )
-    filename = tmp_dir + "/evaluation/" + result_file_name
+    filename = os.path.join(tmp_dir, result_file_dir, result_file_name)
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    with open(filename, "w") as f:
-        f.write(
-            "Min courses to consider user valid={:.3f} |  Compute metrics for all users={}\n".format(
-                min_courses, compute_all
-            )
-        )
-        f.write(
-            "NDCG={:.3f} |  Recall={:.3f} | HR={:.3f} | Precision={:.3f} | HR@1={:.3f} | HR@3={:.3f} | HR@5={:.3f} | Invalid users={}\n".format(
-                avg_ndcg,
-                avg_recall,
-                avg_hit,
-                avg_precision,
-                avg_hit_at_1,
-                avg_hit_at_3,
-                avg_hit_at_5,
-                len(invalid_users),
-            )
-        )
-        f.write(
-            "NDCG_all={:.3f} |  Recall_all={:.3f} | HR_all={:.3f} | Precision_all={:.3f} | HR@1={:.3f} | HR@3={:.3f} | HR@5={:.3f} | Computed for all users.\n".format(
-                avg_ndcg_all,
-                avg_recall_all,
-                avg_hit_all,
-                avg_precision_all,
-                avg_hit_at_1_all,
-                avg_hit_at_3_all,
-                avg_hit_at_5_all,
-            )
-        )
+
+    metrics_all = {
+        "ndcg": avg_ndcg_all,
+        "recall": avg_recall_all,
+        "hit": avg_hit_all,
+        "precision": avg_precision_all,
+    }
+
+    json.dump(metrics_all, open(filename, "w"))
+
     if use_wandb:
         wandb.save(filename)
 
@@ -382,6 +363,8 @@ def evaluate_paths(
     test_labels,
     kg_args,
     use_wandb,
+    result_file_dir,
+    result_file_name,
     validation=False,
     sum_prob=False,
 ):
@@ -425,7 +408,7 @@ def evaluate_paths(
             json.dump(user_course_probs, f)
 
         if validation:
-            return evaluate_validation(topk_matches, test_labels, use_wandb)
+            return evaluate_validation(topk_matches, test_labels)
 
         else:
             for min_courses in [1, 10]:
@@ -435,7 +418,8 @@ def evaluate_paths(
                         test_labels,
                         use_wandb,
                         args.tmp_dir,
-                        result_file_name=f"result_{min_courses}_{compute_all}.txt",
+                        result_file_dir=result_file_dir,
+                        result_file_name=result_file_name,
                         min_courses=min_courses,
                         compute_all=compute_all,
                         sum_prob=sum_prob,
@@ -490,7 +474,7 @@ def evaluate_paths(
             ]  # change order to from smallest to largest!
 
         if validation == True:
-            return evaluate_validation(pred_labels, test_labels, use_wandb)
+            return evaluate_validation(pred_labels, test_labels)
 
         else:
             for min_courses in [10]:
@@ -500,10 +484,10 @@ def evaluate_paths(
                         test_labels,
                         use_wandb,
                         args.tmp_dir,
-                        result_file_name=f"result_{min_courses}_{compute_all}.txt",
+                        result_file_dir=result_file_dir,
+                        result_file_name=result_file_name,
                         min_courses=10,
                         compute_all=compute_all,
-                        sum_prob=sum_prob,
                     )
 
 
@@ -524,8 +508,10 @@ def test(args, kg_args):
             test_labels,
             kg_args,
             args.use_wandb,
+            args.result_file_dir,
             args.result_file_name,
-            args.sum_prob,
+            validation=False,
+            sum_prob=args.sum_prob,
         )
 
 
@@ -557,7 +543,6 @@ if __name__ == "__main__":
 
     args.log_dir = args.tmp_dir + "/" + args.name
     test(args, config.KG_ARGS)
-    filename = args.tmp_dir + "/evaluation/" + args.result_file_name
 
     if args.use_wandb:
         wandb.finish()

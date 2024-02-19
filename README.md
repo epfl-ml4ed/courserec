@@ -10,6 +10,7 @@ This repository contains code for the paper [Finding Paths for Explainable MOOC 
 - [Installation](#installation)
 - [How to run UPGPR on Xuetang](#how-to-run-upgpr-on-xuetang)
 - [How to run UPGPR on COCO](#how-to-run-upgpr-on-coco)
+- [Additional information about UPGPR config files](#additional-information-about-upgpr-config-files)
 - [How to run the baselines](#how-to-run-the-baselines)
 - [Citation](#citation)
 
@@ -128,7 +129,7 @@ The results are saved in tmp/mooc.
 python src/UPGPR/extract_skills.py
 ```
 
-After this process
+After this process, the files course_skill.csv and learner_skill.csv have been created in data/coco/coco
 
 ### Process coco's original files
 
@@ -174,6 +175,29 @@ The results are saved in tmp/coco.
 
 </details>
 
+## Additional information about UPGPR config files
+
+<details>
+
+<summary>Config files</summary>
+
+### Run original PGPR
+
+To run the original PGPR, change the config files in config/UPGPR as follows:
+
+- Set the "reward" attribute in "TRAIN_AGENT" and "TEST_AGENT" to "cosine".
+- Set the "use_pattern" attribute in "TRAIN_AGENT" and "TEST_AGENT" to "true".
+- Set the "max_path_len" attribute in "TRAIN_AGENT" and "TEST_AGENT" to 3.
+
+To run UPGPR, change the config files in config/UPGPR as follows:
+
+- Set the "reward" attribute in "TRAIN_AGENT" and "TEST_AGENT" to "binary_train".
+- Set the "use_pattern" attribute in "TRAIN_AGENT" and "TEST_AGENT" to "false".
+- Set the "max_path_len" attribute in "TRAIN_AGENT" and "TEST_AGENT" to an integer > 2
+- If "max_path_len" has a value different than 3, change the value of the "topk" attribute in "TEST_AGENT" to list of the same length as "max_path_len".
+
+</details>
+
 ## How to run the baselines
 
 <details>
@@ -207,6 +231,8 @@ python src/baselines/baseline.py --config config/baselines/coco_Pop.yaml
 ```
 
 This example runs the Pop baseline on the coco dataset.
+
+You can ignore the warning "command line args [--config config/baselines/coco_Pop.yaml] will not be used in RecBole". The argument is used properly.
 
 </details>
 

@@ -107,7 +107,7 @@ def main():
         "--datadir",
         type=str,
         default="data/coco/coco",
-        help="Config file.",
+        help="Path to the processed dataset",
     )
 
     args = parser.parse_args()

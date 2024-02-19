@@ -241,7 +241,8 @@
         "use_wandb": false,
         "wandb_project_name": "project_name",
         "wandb_run_name": "run_name",
-        "result_file_name": "results.txt",
+        "result_file_dir": "evaluation/UPGPR_max_len_3/",
+        "result_file_name": "run_0.json",
         "early_stopping": false
     }
 }
