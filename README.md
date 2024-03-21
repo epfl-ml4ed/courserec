@@ -12,6 +12,7 @@ This repository contains code for the paper [Finding Paths for Explainable MOOC 
 - [How to run UPGPR on COCO](#how-to-run-upgpr-on-coco)
 - [Additional information about UPGPR config files](#additional-information-about-upgpr-config-files)
 - [How to run the baselines](#how-to-run-the-baselines)
+- [Using a custom dataset](#using-a-custom-dataset)
 - [Citation](#citation)
 
 ## Datasets
@@ -240,6 +241,10 @@ This example runs the Pop baseline on the coco dataset.
 You can ignore the warning "command line args [--config config/baselines/coco_Pop.yaml] will not be used in RecBole". The argument is used properly.
 
 </details>
+
+## Using a custom dataset 
+
+TBD
 
 ## Citation
 
