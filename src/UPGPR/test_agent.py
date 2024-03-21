@@ -519,7 +519,7 @@ if __name__ == "__main__":
     boolean = lambda x: (str(x).lower() == "true")
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--config", type=str, default="config.json", help="Config file."
+        "--config", type=str, default="config/UPGPR/mooc.json", help="Config file."
     )
 
     args = parser.parse_args()

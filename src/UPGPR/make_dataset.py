@@ -15,8 +15,8 @@ from knowledge_graph import KnowledgeGraph
 from easydict import EasyDict as edict
 
 
-def generate_labels(data_dir, mode="train"):
-    enrolment_file = "{}/{}.txt".format(data_dir, mode)
+def generate_labels(data_dir, filename):
+    enrolment_file = f"{data_dir}/{filename}"
     user_courses = {}  # {uid: [cid,...], ...}
     with open(enrolment_file, "r", encoding="utf-8") as f:
         for line in f:
@@ -30,27 +30,13 @@ def generate_labels(data_dir, mode="train"):
     return user_courses
 
 
-def split_train_test_data(
-    data_dir, ratio=0.9, ratio_validation=0.05, data_file="enrolments.txt"
-):
-    path = data_dir + "/" + data_file
-    with open(path, encoding="utf-8") as f:
-        data = f.readlines()
-    train_data, validation_test_data = train_test_split(data, train_size=ratio)
-    validation_data, test_data = train_test_split(
-        validation_test_data, train_size=ratio_validation
-    )
-    create_data_file(data_dir, train_data, "train.txt")
-    create_data_file(data_dir, validation_data, "validation.txt")
-    create_data_file(data_dir, test_data, "test.txt")
-
-
 def split_train_test_data_by_user(
-    data_dir, ratio=0.8, ratio_validation=0.5, data_file="enrolments_by_user.pkl"
+    data_dir, ratio=0.8, ratio_validation=0.5, data_file="enrolments.txt"
 ):
-    path = data_dir + "/" + data_file
-    with open(path, "rb") as f:
-        learner_courses = pickle.load(f)
+    # path = data_dir + "/" + data_file
+    # with open(path, "rb") as f:
+    #     learner_courses = pickle.load(f)
+    learner_courses = generate_labels(data_dir, data_file)
     train_data = []
     test_data = []
     validation_data = []
@@ -80,10 +66,9 @@ def split_train_test_data_by_user(
 
 
 def main():
-    boolean = lambda x: (str(x).lower() == "true")
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--config", type=str, default="config.json", help="Config file."
+        "--config", type=str, default="config/UPGPR/mooc.json", help="Config file."
     )
     args = parser.parse_args()
 
@@ -121,7 +106,7 @@ def main():
     # Generate knowledge graph instance.
     # ========== BEGIN ========== #
     print("Creating knowledge graph from dataset...")
-    dataset = load_dataset(args.tmp_dir)
+    # dataset = load_dataset(args.tmp_dir)
     kg = KnowledgeGraph(
         dataset,
         config.KG_ARGS,
@@ -135,9 +120,9 @@ def main():
     # Genereate train/test labels.
     # ========== BEGIN ========== #
     print("Generate train/test labels.")
-    train_labels = generate_labels(args.data_dir, "train")
-    test_labels = generate_labels(args.data_dir, "test")
-    validation_labels = generate_labels(args.data_dir, "validation")
+    train_labels = generate_labels(args.data_dir, "train.txt")
+    test_labels = generate_labels(args.data_dir, "test.txt")
+    validation_labels = generate_labels(args.data_dir, "validation.txt")
 
     save_labels(args.tmp_dir, train_labels, mode="train", use_wandb=args.use_wandb)
     save_labels(args.tmp_dir, test_labels, mode="test", use_wandb=args.use_wandb)

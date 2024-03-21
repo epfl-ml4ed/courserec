@@ -242,9 +242,21 @@ You can ignore the warning "command line args [--config config/baselines/coco_Po
 
 </details>
 
-## Using a custom dataset 
+## Using a custom dataset
 
-TBD
+### Files structure
+
+In the folder [example](data/example/), we have provided a minimalistic example of a synthetic dataset to help understadning the format of the files required by UPGPR. This dataset is to understand the format of the files only and is too small to be used to test the code.
+
+Below, you will find a detailed description of the files:
+
+- **Enrolments file**. You must have a file named "enrolments.txt" containing the enrollments of each student. The structure is the following: each line contain one enrolment with the student id and the course id separated by a space. id must be integers. An example is provided here: [enrolments.txt](data/example/enrolments.txt)
+- **Entities files.** For each entity in your knowledge graph (student, course, teacher, school, etc...) you must have a file named "entity_name.txt" and each line contains the name of the entity associated to the id line number - 1. For example in the file [courses.txt](data/example/courses.txt), on line 1 we have the course "Math", meaning that it's id is 0.
+- **Relations files.** For each relation in your knowledge grahp (course_teacher, course_school, eacher_school, etc...) you must have a file named "sourceentity_targetentity.txt" where each line corresponds to the source entity id and contains all the tagets entities id that are related to the source entity. For example in the file [course_teachers.txt](data/example/course_teachers.txt), on line 3 we have the course "2 3", meaning that Charlie and Dave are teaching History.
+  
+### Config file
+
+You also need to modify the config file to be suited to your custom dataset. You will need to modify the content of "KG_ARGS" in the config file to specify the entities,relations, and files names that contain these realtions.
 
 ## Citation
 

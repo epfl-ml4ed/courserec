@@ -93,14 +93,14 @@ def get_all_entities_to_idx(entities):
 
 
 def save_enrolments(save_dir, enrolments, entities_to_idx):
-    enr_by_user = {}
+    # enr_by_user = {}
     out = []
     for idx in enrolments.index:
         u = enrolments.user[idx]
         c = enrolments.course[idx]
         u_idx = entities_to_idx["users"][u]
         c_idx = entities_to_idx["courses"][c]
-        enr_by_user[u_idx] = enr_by_user.get(u_idx, []) + [c_idx]
+        # enr_by_user[u_idx] = enr_by_user.get(u_idx, []) + [c_idx]
         out.append(f"{u_idx} {c_idx}")
 
     file_name = os.path.join(save_dir, "enrolments.txt")
@@ -108,9 +108,9 @@ def save_enrolments(save_dir, enrolments, entities_to_idx):
         out = "\n".join(out)
         f.write(out)
 
-    pkl_file_name = os.path.join(save_dir, "enrolments.pkl")
-    with open(pkl_file_name, "wb") as f:
-        pickle.dump(enr_by_user, f)
+    # pkl_file_name = os.path.join(save_dir, "enrolments.pkl")
+    # with open(pkl_file_name, "wb") as f:
+    #     pickle.dump(enr_by_user, f)
 
 
 def save_all_relations(save_dir, dataframes, entities, entities_to_idx):

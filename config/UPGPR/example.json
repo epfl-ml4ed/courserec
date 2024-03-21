@@ -1,7 +1,7 @@
 {
     "PREPROCESS": {
-        "data_dir": "data/mooc/processed_files",
-        "tmp_dir": "tmp/mooc",
+        "data_dir": "data/example",
+        "tmp_dir": "tmp/example",
         "seed": 23,
         "ratio": 0.8,
         "ratio_validation": 0.5,
@@ -19,15 +19,7 @@
             },
             "item": {
                 "enroll": "user",
-                "item_concept": "concept",
-                "item_teacher": "teacher",
-                "item_school": "school"
-            },
-            "school": {
-                "item_school": "item"
-            },
-            "concept": {
-                "item_concept": "item"
+                "item_teacher": "teacher"
             },
             "teacher": {
                 "item_teacher": "item"
@@ -36,27 +28,15 @@
         "entities": [
             "user",
             "item",
-            "school",
-            "teacher",
-            "concept"
+            "teacher"
         ],
         "interaction": "enroll",
         "entity_files": {
-            "user": "users.txt",
+            "user": "students.txt",
             "item": "courses.txt",
-            "school": "schools.txt",
-            "teacher": "teachers.txt",
-            "concept": "concepts.txt"
+            "teacher": "teachers.txt"
         },
         "item_relation": {
-            "item_concept": [
-                "course_concepts.txt",
-                "concept"
-            ],
-            "item_school": [
-                "course_school.txt",
-                "school"
-            ],
             "item_teacher": [
                 "course_teachers.txt",
                 "teacher"
@@ -146,7 +126,7 @@
         "name": "train_transe_model",
         "seed": 23,
         "gpu": "0",
-        "epochs": 30,
+        "epochs": 1,
         "min_epochs": 29,
         "batch_size": 32,
         "lr": 1e-3,
@@ -169,7 +149,7 @@
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
-        "epochs": 50,
+        "epochs": 1,
         "min_epochs": 49,
         "batch_size": 32,
         "lr": 1e-3,
@@ -198,7 +178,7 @@
         "name": "train_agent",
         "seed": 23,
         "gpu": "0",
-        "epochs": 50,
+        "epochs": 1,
         "max_acts": 250,
         "max_path_len": 3,
         "gamma": 0.99,

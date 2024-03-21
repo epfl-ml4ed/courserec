@@ -152,7 +152,7 @@ def train(args, kg_args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--config", type=str, default="config.json", help="Config file."
+        "--config", type=str, default="config/UPGPR/mooc.json", help="Config file."
     )
 
     args = parser.parse_args()
