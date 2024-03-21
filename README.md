@@ -244,6 +244,10 @@ You can ignore the warning "command line args [--config config/baselines/coco_Po
 
 ## Using a custom dataset
 
+<details>
+
+<summary>Custom</summary>
+
 ### Files structure
 
 In the folder [example](data/example/), we have provided a minimalistic example of a synthetic dataset to help understadning the format of the files required by UPGPR. This dataset is to understand the format of the files only and is too small to be used to test the code.
@@ -256,7 +260,9 @@ Below, you will find a detailed description of the files:
   
 ### Config file
 
-You also need to modify the config file to be suited to your custom dataset. You will need to modify the content of "KG_ARGS" in the config file to specify the entities,relations, and files names that contain these realtions.
+You also need to modify the config file to be suited to your custom dataset. You will need to modify the content of "KG_ARGS" in the config file to specify the entities,relations, and files names that contain these realtions. You can have a look at the file [example.json](config/UPGPR/example.json) to have an example of the content of "KG_ARGS" for our example dataset.
+
+</details>
 
 ## Citation
 
